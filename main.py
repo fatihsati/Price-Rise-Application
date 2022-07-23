@@ -78,6 +78,10 @@ class app:
             messagebox.showinfo(title='Hata', message='Yeni Dosya Adi Eskisi İle Aynı Olamaz!')
             self.result_label['text'] = 'Dosya Keydedilemedi. Lütfen Tekrar Deneyiniz'
             return
+
+        if self.rise_percent.get() == '':
+            messagebox.showinfo(title='Hata', message='Zam Orani Boş Olamaz!')
+            return
         
         
         if self.round_down.get() == 0:      # checks if round up or down
