@@ -37,7 +37,7 @@ def change_doc(docname, zam_orani, round_up, currency_unit):
                 else:
                     price = cell_value
                 cell.text = zam_to_cell(int(price), zam_orani, round_up, currency_unit)
-                
+                                       
             except:
                 continue
     return doc
