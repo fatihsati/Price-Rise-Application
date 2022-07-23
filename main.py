@@ -4,11 +4,13 @@ from tkinter import filedialog
 from tkinter import *
 import tkinter
 import zam
+import datetime
 
 
 class app:
     
     def __init__(self, master):
+        self.time = datetime.datetime.now() # datetime object to be used in filename
         frame = Frame(master)
         frame.pack(side='top', fill='x', expand=False)
         
@@ -16,7 +18,7 @@ class app:
         self.button = Button(frame, text='Dosya seç', command= self.button_command)
         self.button.pack(side='left')
 
-        self.filename_label = Label(frame, text='')    # label style eklenecek
+        self.filename_label = Label(frame, text='')    
         self.filename_label.pack(side='left', padx=20, fill='x', expand=True)
 
 
@@ -38,16 +40,27 @@ class app:
         self.is_dollar = IntVar()
         self.cb3 = Checkbutton(frame_bottom, text= 'Dolar Listesi', variable=self.is_dollar).grid(row=2, column=0, sticky='w')
 
-        self.output_file_name_label = Label(frame_bottom, text='Yeni Dosya Adı').grid(row=3, column=0, sticky='w')
+        self.todays_date_into_filename = Button(frame_bottom, text='Bugünün Tarihini Ekle', command=self.add_date).grid(row=2, column=1, sticky='e')
+
+        self.output_file_name_label = Label(frame_bottom, text='Yeni Dosya Adı').grid(row=3, column=0, sticky='w', pady=20)
         self.output_file_name = Entry(frame_bottom)
-        self.output_file_name.grid(row=3, column=1, sticky='w', padx=15, ipadx=50)
+        self.output_file_name.grid(row=3, column=1, sticky='w', padx=15, ipadx=50, pady=20)
         
         self.submit_button = Button(frame_bottom, text='Zam Yap', command=self.submit_button_func).grid(row=4, column=1, sticky='w', padx=15, pady=10)
 
         self.result_label = Label(frame_bottom, text='')
         self.result_label.grid(row=5, column=1, ipady=25, sticky='w')
         
-        
+    
+    def add_date(self):
+        if self.output_file_name.get() != '':
+            date = self.time.strftime('%d') + '.' + self.time.strftime('%m') + '.' + self.time.strftime('%Y')
+            output_file_with_date = self.output_file_name.get().split('.docx')[0] + '_' + date
+            self.output_file_name.delete(0, 'end')
+            self.output_file_name.insert(0, output_file_with_date)
+            
+        else:
+            messagebox.showinfo(title='Hata', message='Dosya Adı Boş Olamaz')
         
     def button_command(self):
         self.file_path = filedialog.askopenfilename()       # get filepath
@@ -95,10 +108,6 @@ if __name__ == "__main__":
     
     root = tk.Tk()
     root.title('Otomatik Zam')
-    root.geometry('400x400')
+    root.geometry('400x450')
     obj = app(root)
     root.mainloop()
-
-
-
-
