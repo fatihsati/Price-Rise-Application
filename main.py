@@ -22,7 +22,6 @@ class app:
         self.filename_label.pack(side='left', padx=20, fill='x', expand=True)
 
 
-        
         frame_bottom = Frame(master)
         frame_bottom.pack(side='top', fill='both', expand=True, pady=50)
                 

@@ -30,16 +30,27 @@ def change_doc(docname, zam_orani, round_up, currency_unit):
     table = doc.tables[0]
     for row in table.rows[1:]:    
         for cell in row.cells[1:]:
-            try:
-                cell_value = cell.text.split('.')[0] 
-                if currency_unit in cell_value:
-                    price = cell_value[1:].strip()
-                else:
-                    price = cell_value
-                cell.text = zam_to_cell(int(price), zam_orani, round_up, currency_unit)
-                                       
-            except:
-                continue
+            if '.' in cell.text:
+                try:
+                    cell_value = cell.text.split('.')[0] 
+                    if currency_unit in cell_value:
+                        price = cell_value[1:].strip()
+                    else:
+                        price = cell_value
+                    cell.text = zam_to_cell(int(price), zam_orani, round_up, currency_unit)
+                                        
+                except:
+                    continue
+            elif ',' in cell.text:
+                try:
+                    cell_value = cell.text.split(',')[0] 
+                    if currency_unit in cell_value:
+                        price = cell_value[1:].strip()
+                    else:
+                        price = cell_value
+                    cell.text = zam_to_cell(int(price), zam_orani, round_up, currency_unit)
+                except:
+                    continue
     return doc
 
 
